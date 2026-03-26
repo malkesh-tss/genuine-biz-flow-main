@@ -432,7 +432,7 @@ const Index = () => {
               </motion.div>
 
               <motion.p variants={fadeUp} className="text-muted-foreground/60 font-body text-xs sm:text-sm text-center">
-                © {new Date().getFullYear()} Close with Confidence. All rights reserved.
+                © {new Date().getFullYear()} The Scale Summit. All rights reserved.
               </motion.p>
             </motion.div>
           </div>
