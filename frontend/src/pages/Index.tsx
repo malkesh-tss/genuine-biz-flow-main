@@ -303,6 +303,7 @@ const Index = () => {
                   <h3 className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-foreground mb-2 sm:mb-3 md:mb-4">You're In!</h3>
                   <p className="text-sm sm:text-base md:text-lg text-muted-foreground font-body mb-4 sm:mb-6 md:mb-8">Thank you for registering for the event.</p>
                   <p className="text-sm sm:text-base md:text-lg text-muted-foreground font-body">We'll send you the Zoom link before the event. See you on April 29th!</p>
+                  
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="bg-card rounded-xl sm:rounded-2xl md:rounded-3xl border border-border shadow-2xl shadow-gold/5 p-5 sm:p-6 md:p-8 lg:p-10 space-y-4 sm:space-y-5 md:space-y-6 relative overflow-hidden">
