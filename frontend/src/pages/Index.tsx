@@ -20,6 +20,45 @@ import tssLogo from "@/assets/tss-logo.png";
 import eventBanner from "@/assets/event-banner.jfif";
 import PageLoader from "@/components/PageLoader";
 
+function getLastWednesdayOfMonth(year: number, month: number) {
+  const lastDayOfMonth = new Date(year, month + 1, 0);
+  const weekday = lastDayOfMonth.getDay();
+  const daysToSubtract = (weekday + 4) % 7;
+  return new Date(year, month + 1, 0 - daysToSubtract);
+}
+
+function getNextLastWednesday(reference = new Date()) {
+  const year = reference.getFullYear();
+  const month = reference.getMonth();
+  const lastWednesdayThisMonth = getLastWednesdayOfMonth(year, month);
+  if (reference <= lastWednesdayThisMonth) {
+    return lastWednesdayThisMonth;
+  }
+  return getLastWednesdayOfMonth(year, month + 1);
+}
+
+function formatEventDate(date: Date) {
+  const month = date.toLocaleString("en-US", { month: "long" });
+  const day = date.getDate();
+  const year = date.getFullYear();
+  const suffix = (n: number) => {
+    const remainder = n % 100;
+    if (remainder >= 11 && remainder <= 13) return "th";
+    switch (n % 10) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
+    }
+  };
+  return `${month} ${day}${suffix(day)}, ${year}`;
+}
+
+const eventDate = getNextLastWednesday();
 const stagger = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.15 } },
@@ -52,7 +91,7 @@ const features = [
 ];
 
 const details = [
-  { icon: Calendar, label: "When", value: "May 27th, 2026" },
+  { icon: Calendar, label: "When", value: formatEventDate(eventDate) },
   { icon: Clock, label: "Time", value: "12:00 PM PDT / 3:00 PM EST" },
   { icon: MapPin, label: "Where", value: "Online via Zoom" },
   { icon: MessageSquare, label: "Duration", value: "30 minutes" },
@@ -131,7 +170,7 @@ const Index = () => {
             <img
               src={tssLogo}
               alt="The Scale Summit"
-              className="h-8 sm:h-10 md:h-12 lg:h-14 object-contain"
+              className="h-10 sm:h-12 md:h-14 lg:h-16 object-contain"
             />
             <Button
               variant="gold"
@@ -195,7 +234,7 @@ const Index = () => {
                 style={{ animationDelay: "0.25s" }}
               >
                 30 minutes. Decision-makers from across the country. No small
-                talk, no spammy pitches— just business owners having real
+                talk, no spammy pitches just business owners having real
                 conversations that lead to real growth.
               </p>
 
@@ -297,7 +336,7 @@ const Index = () => {
                 connections without wasting your time.
               </p>
               <p className="text-sm sm:text-base md:text-lg lg:text-xl text-primary-foreground/60 font-body leading-relaxed">
-                There's no catch— just an open space and real conversations with
+                There's no catch  just an open space and real conversations with
                 people who are building, growing, and doing the work. Spots are
                 limited to keep it focused and productive.
               </p>
@@ -372,7 +411,7 @@ const Index = () => {
                     <Quote className="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 text-gold mb-3 sm:mb-4" />
                     <p className="text-foreground font-body italic text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed">
                       "If you're growing your business without deep pockets, but
-                      with big ambition— you're in the right place."
+                      with big ambition you're in the right place."
                     </p>
                   </div>
                 </div>
@@ -401,7 +440,7 @@ const Index = () => {
                   </span>
                 </h2>
               </div>
-              // updated chnages
+             
               {submitted ? (
                 <div
                   className="text-center py-12 sm:py-16 md:py-20 opacity-0 animate-fade-up"
