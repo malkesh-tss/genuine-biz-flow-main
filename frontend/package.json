@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run client",
+    "dev": "node api.js && npm run client",
     "client": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
@@ -13,7 +13,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "server": "node api/server.js",
-    "start": "npm run dev"
+    "start": "node api.js && npm run dev"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
