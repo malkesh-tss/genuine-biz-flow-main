@@ -455,7 +455,7 @@ const Index = () => {
                   </p>
                   <p className="text-sm sm:text-base md:text-lg text-muted-foreground font-body">
                     We'll send you the Zoom link before the event. See you on
-                    May 27th!
+                    {formatEventDate(eventDate)}!
                   </p>
                 </div>
               ) : (
