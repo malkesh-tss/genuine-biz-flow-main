@@ -27,13 +27,29 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 const PORT = process.env.PORT || 3001;
 
-// NeonDB PostgreSQL connection pool - only create if DATABASE_URL exists
+function getDatabaseConnectionString() {
+  if (process.env.DATABASE_URL) {
+    return process.env.DATABASE_URL;
+  }
+
+  const { PGHOST, PGUSER, PGPASSWORD, PGDATABASE } = process.env;
+  if (PGHOST && PGUSER && PGPASSWORD) {
+    const encodedPassword = encodeURIComponent(PGPASSWORD);
+    return `postgresql://${PGUSER}:${encodedPassword}@${PGHOST}/${PGDATABASE || 'postgres'}?sslmode=require`;
+  }
+
+  return null;
+}
+
+// NeonDB PostgreSQL connection pool - only create if a valid database URL exists
 let pool = null;
 
 function getPool() {
-  if (!pool && process.env.DATABASE_URL) {
+  const connectionString = getDatabaseConnectionString();
+
+  if (!pool && connectionString) {
     pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
+      connectionString,
       ssl: {
         rejectUnauthorized: false
       }
@@ -230,9 +246,16 @@ app.post('/api/services/register', async (req, res) => {
   } catch (error) {
     console.error('[ERROR] Registration error:', error);
     debugLog('Registration error', { message: error.message, stack: error.stack });
-    res.status(500).json({ 
+
+    const isAuthError = /password authentication failed|28P01|invalid_password/i.test(error.message || '');
+    const statusCode = isAuthError ? 503 : 500;
+    const message = isAuthError
+      ? 'Database authentication failed. Update the Neon DATABASE_URL / PG credentials in the backend environment.'
+      : error.message;
+
+    res.status(statusCode).json({
       error: 'Registration failed',
-      message: error.message 
+      message
     });
   }
 });
