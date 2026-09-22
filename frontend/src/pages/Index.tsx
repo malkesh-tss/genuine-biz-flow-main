@@ -124,8 +124,11 @@ const Index = () => {
 
     setLoading(true);
     try {
-      const apiUrl = "https://api-tssd.vercel.app/api/services";
-      const response = await fetch(`${apiUrl}/register`, {
+      const endpoint = import.meta.env.VITE_API_URL
+        ? `${import.meta.env.VITE_API_URL.replace(/\/$/, "")}/api/services/register`
+        : "/api/services/register";
+
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
