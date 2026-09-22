@@ -5,8 +5,8 @@
   "main": "api/server.js",
   "type": "module",
   "scripts": {
-    "start": "node api/server.js",
-    "dev": "node --watch api/server.js"
+    "start": "node start-server.mjs",
+    "dev": "node --watch start-server.mjs"
   },
   "keywords": ["express", "api", "networking"],
   "author": "",
