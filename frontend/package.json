@@ -4,16 +4,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run client",
+    "dev": "node init && npm run client",
     "client": "vite",
-    "build": "vite build",
-    "build:dev": "vite build --mode development",
+    "build": "node init && vite build",
+    "build:dev": "node init && vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
     "server": "node api/server.js",
-    "start": "npm run dev"
+    "start": "node init && npm run dev"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
