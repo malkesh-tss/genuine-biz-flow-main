@@ -5,10 +5,14 @@
   "main": "api/server.js",
   "type": "module",
   "scripts": {
-    "start": "node start-server.mjs",
-    "dev": "node --watch start-server.mjs"
+    "start": "node api.js && node start-server.mjs",
+    "dev": "node api.js && node --watch start-server.mjs"
   },
-  "keywords": ["express", "api", "networking"],
+  "keywords": [
+    "express",
+    "api",
+    "networking"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
